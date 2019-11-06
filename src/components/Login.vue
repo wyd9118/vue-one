@@ -20,6 +20,7 @@
     </div>
 </template>
 <script>
+import qs from 'qs'
     export default {
         name:'login',
         data(){
@@ -32,7 +33,22 @@
         },
         methods:{
             submitLogin(){
-                
+                let d = {
+                    'publicNumberId':1,
+                    'pageNo':1,
+                    'pageSize':15,
+                    'needTotalSize':true,
+                    'companyCode':'ruixue_test',
+                    'certificate':'52895F8E60699E3552F63D522A113D8A757F63223C6AF509B1B4580E263E605790450BAE54C406B91AFD1BB9824BE02C7493F9A510D30C21745A73DD5C88F6B0'
+                };
+                this.$http({
+                    url:this.$config.baseUrl+'content/findPage',
+                    method:'post',
+                    data:qs.stringify(d)
+                })
+                .then(()=>{
+                //    console.log(res)
+                });
             }
         }
     }
