@@ -20,6 +20,7 @@
     </div>
 </template>
 <script>
+import qs from 'qs'
     export default {
         name:'login',
         data(){
@@ -50,7 +51,8 @@
                 })
                 .then(function(response){
                     console.log(response)
-                });
+                };
+
             }
         }
     }
