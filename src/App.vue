@@ -1,14 +1,15 @@
 <template>
   <div id="app">
-    <Login/>
+    <ContentList/>
   </div>
 </template>
 <script>
-import Login from './components/Login'
+// import Login from './components/Login'
+import ContentList from './components/ContentList'
 export default {
   name: 'app',
   components: {
-    Login
+    ContentList
   }
 }
 </script>
