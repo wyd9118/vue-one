@@ -12,24 +12,30 @@
             width="55">
             </el-table-column>
             <el-table-column
+            prop="no"
+            label="序号"
+            width="60">
+            </el-table-column>
+            <el-table-column
             prop="categoryNames"
             label="分类"
-            width="120">
+            width="50">
             </el-table-column>
             <el-table-column
             prop="keyword"
             label="关键字"
-            width="120">
+            width="140">
             </el-table-column>
             <el-table-column
             prop="title"
             label="标题"
+            width="200"
             show-overflow-tooltip>
             </el-table-column>
             <el-table-column
             prop="browNum"
             label="浏览次数"
-            width="120">
+            width="80">
             </el-table-column>
             <el-table-column
             prop="type"
@@ -39,12 +45,12 @@
             <el-table-column
             prop="create_time"
             label="添加时间"
-            width="120">
+            width="140">
             </el-table-column>
             <el-table-column
             prop="status"
             label="状态"
-            width="120">
+            width="80">
             </el-table-column>
             <el-table-column
             prop="type"
@@ -53,9 +59,13 @@
             </el-table-column>
         </el-table>
         <el-pagination
+        :current-page="pageNo"
         :page-size="pageSize"
-        layout="prev, pager, next"
-        :total="total">
+        :total="total"
+        layout="prev, pager, next,sizes"
+        :page-sizes="[10,50,100]"
+        @current-change="handlePagination"
+        @size-change="handleSizeChange">
         </el-pagination>
     </div>
 </template>
@@ -67,18 +77,18 @@
                 tableData:[],
                 total:0,
                 pageSize:10,
-                pageNo:1
+                pageNo:1,
             }
         },
         methods:{
             queryData(){
                 let d = {
                         publicNumberId:1,
-                        pageNo:1,
-                        pageSize:15,
+                        pageNo:this.pageNo,
+                        pageSize:this.pageSize,
                         needTotalSize:true,
                         companyCode:'ruixue_test',
-                        certificate:'52895F8E60699E3552F63D522A113D8A757F63223C6AF509B1B4580E263E605790450BAE54C406B9ECE92C47050ECD01F208795C8CF6B0223868F74F47D94698'
+                        certificate:localStorage.getItem('certificate')
                     };
                 var _this = this;
                 this.$http({
@@ -87,8 +97,8 @@
                     withCredentials:true,
                     data: d
                 })
-                .then(function(res){
-                    if(res.data){
+                .then(function(res){ console.log(res)
+                    if(res.data&&res.data.errorCode===0){
                         let r = res.data.data;
                         console.log(r);
                         _this.total = r.totalSize;
@@ -98,6 +108,14 @@
             },
             handleSelectionChange(){
                 
+            },
+            handlePagination(page){ console.log(1)
+                this.pageNo = page;
+                this.queryData();
+            },
+            handleSizeChange(size){ console.log(2)
+                this.pageSize = size;
+                this.queryData();
             }
         },
         created(){
