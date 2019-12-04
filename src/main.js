@@ -6,15 +6,23 @@ import axios from 'axios'
 import qs from 'qs'
 import router from './router'
 import commonConfig from './common-config.js'
-axios.interceptors.request.use(function(config){
-    config.data = qs.stringify(config.data);
-    return config;
-});
 Vue.prototype.$http = axios
 Vue.prototype.$config = commonConfig
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+let _this = this;
+axios.interceptors.request.use(function(config){ console.log(_this,commonConfig)
+  config.companyCode = commonConfig.companyCode;
+  let certificate = sessionStorage.getItem('certificate');
+  if(certificate){
+    config.certificate = certificate;
+  }else{
+    router.push('/login');
+  }
+  config.data = qs.stringify(config.data);
+  return config;
+});
 new Vue({
   el:'#app',
   render(h){

@@ -87,8 +87,8 @@
                         pageNo:this.pageNo,
                         pageSize:this.pageSize,
                         needTotalSize:true,
-                        companyCode:'ruixue_test',
-                        certificate:localStorage.getItem('certificate')
+                        // companyCode:'ruixue_test',
+                        // certificate:localStorage.getItem('certificate')
                     };
                 var _this = this;
                 this.$http({

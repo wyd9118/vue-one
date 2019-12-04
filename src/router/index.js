@@ -31,8 +31,9 @@ const router = new VueRouter({
     module:'history',
     routes
 });
-router.beforeEach(function(to,from,next){ console.log(to)
-    let _token = localStorage.getItem('userToken');
+router.beforeEach(function(to,from,next){ console.log(to,localStorage.getItem('userToken'))
+    let _token = localStorage.getItem('certificate');
+    // let _token = localStorage.getItem('userToken');
     _token||to.path==='/login'?next():next('/login');
 });
 export default router
