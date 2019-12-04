@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="login-section">
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="用户名：">
@@ -12,6 +13,28 @@
       </el-form-item>
     </el-form>
   </div>
+=======
+    <div class="login-section">
+        <el-form ref="form" :model="form" label-width="80px">
+            <el-form-item label="用户名：">
+                <el-input
+                placeholder="输入用户名" 
+                v-model="form.username"> 
+                </el-input>
+            </el-form-item>
+            <el-form-item label="密码">
+                <el-input
+                type="password"
+                placeholder="输入密码" 
+                v-model="form.psw"> 
+                </el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button class="primary" @click="submitLogin">登录</el-button>
+            </el-form-item>
+        </el-form>
+    </div>
+>>>>>>> af130afeaf9f3467da29915f18878f65b7f80be5
 </template>
 <script>
     export default {
@@ -27,24 +50,30 @@
         methods:{
             submitLogin(){
                 let d = {
-                        // username: this.form.username,
-                        // password: this.form.psw
-                        publicNumberId:1,
-                        pageNo:1,
-                        pageSize:15,
-                        needTotalSize:true,
+                        username: this.form.username,
+                        password: this.form.psw,
                         companyCode:'ruixue_test',
-                        certificate:'52895F8E60699E3552F63D522A113D8A7117BC3C32E76CE0B41555AB8653CDF2EFED99D1C71919E48B33B0693CD689425ED074C2D34E05517F91CB6898D05F79'
                     };
+                let _this = this;
                 this.$http({
                     method: 'post',
-                    url: 'http://120.26.101.143:80/welearning/api/content/findPage',
+                    url: 'http://120.26.101.143:80/welearning/api/login/validate',
                     withCredentials:true,
                     data: d
                 })
+<<<<<<< HEAD
                 .then(function(response){
                     // console.log(response);
                 };    
+=======
+                .then(function(res){
+                    console.log(res);
+                    if(res.data&&res.data.errorCode===0&&res.data.data){
+                        localStorage.setItem('certificate',res.data.data.certificate);
+                        _this.$router.push({path:'/'});
+                    }
+                });
+>>>>>>> af130afeaf9f3467da29915f18878f65b7f80be5
 
             }
         }
