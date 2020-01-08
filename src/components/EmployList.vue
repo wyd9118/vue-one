@@ -17,11 +17,6 @@
             width="60">
             </el-table-column>
             <el-table-column
-            prop="categoryNames"
-            label="分类"
-            width="50">
-            </el-table-column>
-            <el-table-column
             prop="keyword"
             label="关键字"
             width="140">
@@ -33,28 +28,52 @@
             show-overflow-tooltip>
             </el-table-column>
             <el-table-column
-            prop="browNum"
-            label="浏览次数"
+            prop="type"
+            label="模板"
             width="80">
             </el-table-column>
             <el-table-column
-            prop="type"
-            label="类型"
+            prop="avergeScore"
+            label="评价得分"
             width="120">
             </el-table-column>
             <el-table-column
-            prop="create_time"
-            label="添加时间"
-            width="140">
-            </el-table-column>
-            <el-table-column
-            prop="status"
-            label="状态"
+            prop="memberNumber"
+            label="阅读人数"
             width="80">
             </el-table-column>
             <el-table-column
-            prop="type"
-            label="类型"
+            prop="countFavor"
+            label="点赞数"
+            width="80">
+            </el-table-column>
+            <el-table-column
+            prop="countComment"
+            label="评论数"
+            width="120">
+            </el-table-column>
+            <el-table-column
+            prop="averageTime"
+            label="人均时长（分钟）"
+            width="140">
+            </el-table-column>
+            <el-table-column
+            label="状态"
+            width="120">
+                <template slot-scope="scope">
+                    <el-button type="text">{{scope.row.status?"开启":"关闭"}}</el-button>
+                </template>
+            </el-table-column>
+            <el-table-column
+            label="积分"
+            width="120">
+                <template slot-scope="scope">
+                    <el-button type="text">{{scope.row.is_open_point?"开启":"关闭"}}</el-button>
+                </template>
+            </el-table-column>
+            <el-table-column
+            prop="ofUse"
+            label="调用情况"
             width="120">
             </el-table-column>
             <el-table-column
@@ -62,8 +81,6 @@
             width="180">
                 <template slot-scope="scope">
                     <el-button type="text" @click="editContent(scope.row)">编辑</el-button>
-                    <el-button type="text" @click="copyContent(scope.row)">复制</el-button>
-                    <el-button type="text" @click="delContent(scope.row,scope.$index)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -80,7 +97,7 @@
 </template>
 <script>
     export default{
-        name:'content-list',
+        name:'employ-list',
         data:function(){
             return {
                 tableData:[],
@@ -89,6 +106,8 @@
                 pageNo:1,
             }
         },
+        props:[
+        ],
         methods:{
             queryData(){
                 let d = {
@@ -102,7 +121,7 @@
                 var _this = this;
                 this.$http({
                     method: 'post',
-                    url: 'http://114.215.254.30:8080/welearning/api/content/findPage',
+                    url: 'http://114.215.254.30:8080/welearning/api/analysis/queryContentReport',
                     withCredentials:true,
                     data: d
                 })
@@ -126,30 +145,6 @@
                 this.pageSize = size;
                 this.queryData();
             },
-            delContent(row,index){ console.log(row,row.id,index);
-                var _this = this;
-                this.$http({
-                    url:'http://114.215.254.30:8080/welearning/api/content/delete',
-                    method:'post',
-                    data:{
-                        id:row.id,
-                        certificate:sessionStorage.getItem('certificate'),
-                        companyCode:'ruixue_dev',
-                    },
-                }).then(function(res){
-                    if(res.data&&res.data.errorCode===0){
-                        _this.tableData.splice(index,1);
-                        _this.$message({
-                            message: '删除成功',
-                            type: 'success'
-                        });
-                    }else{
-                        _this.$message.error(res.data&&res.data.errorMassage||'删除失败');
-                    }
-                }).catch(function(){
-                    _this.$message.error('删除失败');
-                });
-            }
         },
         created(){
             this.queryData();

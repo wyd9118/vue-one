@@ -36,12 +36,12 @@
                 let d = {
                         username: this.form.username,
                         password: this.form.psw,
-                        // companyCode:'ruixue_test',
+                        companyCode:'ruixue_dev',
                     };
                 let _this = this;
                 this.$http({
                     method: 'post',
-                    url: _this.$config.baseUrl+'login/validate',
+                    url: 'http://114.215.254.30:8080/welearning/api/login/validate',
                     withCredentials:true,
                     data: d
                 })

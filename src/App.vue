@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <div class="nav-list" v-if="$route.meta.keepAlive">
-      <router-link to="/content-list" class="nav-item">内容管理</router-link>
+    <div class="nav-list" v-if="$route.meta.showMenu">
+      <router-link to="content-list" class="nav-item">内容管理</router-link>
+      <router-link to="employ-list" class="nav-item">使用情况</router-link>
     </div>
     <div class="view-section">
       <router-view></router-view>
